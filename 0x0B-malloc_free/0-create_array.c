@@ -4,7 +4,7 @@
  * create_array - creates an array of chars.
  * @size: size of the array.
  * @c: st3rongged char
- *return cr
+ *Return: pointer of an array of cr
  *
  */
 
