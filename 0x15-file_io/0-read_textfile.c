@@ -1,39 +1,28 @@
+#include <stdio.h>
 #include "main.h"
-#include <stdlib.h>
 
 /**
- * read_textfile - Reads a text file and prints it to POSIX stdout.
- * @filename: A pointer to the name of the file.
- * @letters: The number of letters the
- *           function should read and print.
- *
- * Return: If the function fails or filename is NULL - 0.
- *         O/w - the actual number of bytes the function can read and print.
+ * binary_to_uint - Function that converts a binary number to an unsigned int.
+ * Prototype: unsigned int binary_to_uint(const char *b);
+ * @b: is pointing to a string of 0 and 1 chars
+ * Return: the converted number, or 0 if
+ * -> there is one or more chars in the string b that is not 0 or 1
+ * -> b is NULL
  */
-ssize_t read_textfile(const char *filename, size_t letters)
+unsigned int binary_to_uint(const char *b)
 {
-	ssize_t o, r, w;
-	char *buffer;
+	unsigned int value = 0;
 
-	if (filename == NULL)
+	if (b == NULL)
 		return (0);
-
-	buffer = malloc(sizeof(char) * letters);
-	if (buffer == NULL)
-		return (0);
-
-	o = open(filename, O_RDONLY);
-	r = read(o, buffer, letters);
-	w = write(STDOUT_FILENO, buffer, r);
-
-	if (o == -1 || r == -1 || w == -1 || w != r)
+	while (*b != '\0')
 	{
-		free(buffer);
-		return (0);
+		value = value << 1;
+		if (*b != '1' && *b != '0')
+			return (0);
+		else if (*b == '1')
+			value = value | 1;
+		b++;
 	}
-
-	free(buffer);
-	close(o);
-
-	return (w);
+	return (value);
 }
